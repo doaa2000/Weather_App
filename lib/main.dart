@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weatherapp/cubit/weather_cubit.dart';
-import 'package:weatherapp/cubit/weather_states.dart';
-import 'package:weatherapp/screens/home_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:weatherapp/services/weather_services.dart';
+import 'package:weatherapp/cubit/todo_app_cubit.dart';
+import 'package:weatherapp/screens/constants.dart';
+import 'package:weatherapp/screens/new_atsks.dart';
+import 'package:weatherapp/screens/main_screen.dart';
+
+import 'bloc_observer.dart';
 
 void main() {
-  runApp(BlocProvider(
-      create: (context) => WeatherCubit(WeatherService()),
-      child: WeatherApp()));
+  Bloc.observer = MyBlocObserver();
+  runApp(WeatherApp());
 }
 
 class WeatherApp extends StatelessWidget {
@@ -18,16 +18,14 @@ class WeatherApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: BlocProvider.of<WeatherCubit>(context).model != null
-            ? BlocProvider.of<WeatherCubit>(context).model!.getThemeColor()
-            : Colors.blue,
-        brightness: Brightness.light,
+    return BlocProvider(
+      create: (context) => TodoAppCubit()..CreateDatabase(),
+      child: MaterialApp(
+        theme: ThemeData(primaryColor: defaultColor),
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen(),
       ),
-      home: HomeScreen(),
     );
   }
 }
