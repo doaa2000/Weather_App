@@ -37,7 +37,7 @@ class AddTask extends StatelessWidget {
                   CustomTextFormFeild(
                       onPressed: () {},
                       controller: dateController,
-                      text: 'task date ::)'),
+                      text: 'task date :::)'),
                   CustomButtonWidget(
                     onTap: () {
                       cubit.insertToDatabase(
